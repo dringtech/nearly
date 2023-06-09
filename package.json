@@ -1,0 +1,15 @@
+{
+  "name": "nearly",
+  "version": "0.1.0",
+  "description": "A package that creates human readable renderings of numbers",
+  "main": "index.js",
+  "scripts": {
+    "build": "esbuild src/lib.ts --global-name=nearly --outfile=dist/nearly.js --bundle --sourcemap --target=chrome58,firefox57,safari11,edge16",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Giles Dring <giles@dringtech.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "0.17.19"
+  }
+}
