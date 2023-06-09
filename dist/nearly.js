@@ -56,14 +56,18 @@ var nearly = (() => {
   }
 
   // src/lib.ts
+  var EXACT = "exacly";
+  var LESS_THAN = "less than";
+  var MORE_THAN = "more than";
+  var ABOUT = "about";
   var readableDirection = (difference) => {
     if (difference === 0)
-      return "exactly";
+      return EXACT;
     if (difference < -0.01)
-      return "less than";
+      return LESS_THAN;
     if (difference > 0.01)
-      return "more than";
-    return "about";
+      return MORE_THAN;
+    return ABOUT;
   };
   return __toCommonJS(lib_exports);
 })();
