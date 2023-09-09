@@ -14,10 +14,16 @@ const ratioSort = (a:Ratio, b: Ratio) => {
 
 export function ratioed(ratio: number, options: RatioedOptions = {}) {
   const possibleRatios: Ratio[] = [];
-  const maxDenominator = options.maxDenominator || 10;
-  const tolerance = 0.1 / maxDenominator;
+  // const maxDenominator = options.maxDenominator || 10;
+  // const tolerance = 0.1 / maxDenominator;
 
-  for (let denominator = 2; denominator <= maxDenominator; denominator++) {
+  const baseDenominators = [...Array(9).keys()].map(x => x + 2);
+  const denominators = [
+    ...baseDenominators,
+    ...baseDenominators.map(x => x * 10),
+  ]
+
+  for (const denominator of denominators) {
     const numerator = clamp(1, Math.round(ratio * denominator), denominator - 1);
     const difference = ratio - numerator / denominator;
     possibleRatios.push({
@@ -25,10 +31,11 @@ export function ratioed(ratio: number, options: RatioedOptions = {}) {
       denominator,
       difference,
     });
-    if (Math.abs(difference) < tolerance) break;
+    // if (Math.abs(difference) < tolerance) break;
   }
 
+  // Return the ratio with the lowest difference
   return possibleRatios
     .sort(ratioSort)
-    .shift();
+    .shift() as Ratio;
 }
