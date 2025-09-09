@@ -1,4 +1,4 @@
-export { ratioed } from './ratio.ts';
+export { ratioed, type RatioedOptions, type Ratio } from './ratio.ts';
 
 const EXACT = 'exacly';
 const LESS_THAN = 'less than';

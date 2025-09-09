@@ -39,11 +39,13 @@ var nearly = (() => {
   };
   function ratioed(ratio, options = {}) {
     const possibleRatios = [];
+    const maxDenominator = options.maxDenominator || Infinity;
     const baseDenominators = [...Array(9).keys()].map((x) => x + 2);
     const denominators = [
       ...baseDenominators,
       ...baseDenominators.map((x) => x * 10)
-    ];
+    ].filter((x) => x <= maxDenominator);
+    console.log(denominators);
     for (const denominator of denominators) {
       const numerator = clamp(1, Math.round(ratio * denominator), denominator - 1);
       const difference = ratio - numerator / denominator;
