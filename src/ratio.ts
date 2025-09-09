@@ -2,6 +2,9 @@ import { clamp } from './utils.ts';
 
 export type Ratio = { numerator: number, denominator: number, difference: number };
 export type RatioedOptions = {
+  /** Explicitly set denominators to test against */
+  denominators?: number[];
+  /** Maximum denominator to consider */
   maxDenominator?: number;
 }
 
@@ -12,16 +15,18 @@ const ratioSort = (a:Ratio, b: Ratio) => {
   return difference;
 }
 
+const baseDenominators = [...Array(9).keys()].map(x => x + 2);
+const decades = [
+  ...baseDenominators,
+  ...baseDenominators.map(x => x * 10),
+];
+
 export function ratioed(ratio: number, options: RatioedOptions = {}) {
   const possibleRatios: Ratio[] = [];
   const maxDenominator = options.maxDenominator || Infinity;
   // const tolerance = 0.1 / maxDenominator;
 
-  const baseDenominators = [...Array(9).keys()].map(x => x + 2);
-  const denominators = [
-    ...baseDenominators,
-    ...baseDenominators.map(x => x * 10),
-  ].filter(x => x <= maxDenominator);
+  const denominators = (options.denominators || decades).filter(x => x <= maxDenominator);
 
   for (const denominator of denominators) {
     const numerator = clamp(1, Math.round(ratio * denominator), denominator - 1);
