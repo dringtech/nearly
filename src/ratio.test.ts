@@ -46,3 +46,20 @@ Deno.test("large ratios (max denominator 10)", () => {
     const result = test(0.999, { maxDenominator: 10 });
     assertObjectMatch(result, { numerator: 9, denominator: 10 });
 });
+
+Deno.test("explicit denominators", () => {
+    let result = undefined;
+    result = test(0.5, { denominators: [2, 3, 5, 10, 20] });
+    assertObjectMatch(result, { numerator: 1, denominator: 2 });
+    result = test(1/3, { denominators: [1, 2, 3, 5, 10, 20] });
+    assertObjectMatch(result, { numerator: 1, denominator: 3 });
+    result = test(0.999, { denominators: [2, 3, 5, 10, 20] });
+    assertObjectMatch(result, { numerator: 19, denominator: 20 });
+});
+
+Deno.test("explicit denominators with maximum", () => {
+    let result = undefined;
+
+    result = test(0.999, { denominators: [2, 3, 5, 10, 20], maxDenominator: 10 });
+    assertObjectMatch(result, { numerator: 9, denominator: 10 });
+});
